@@ -1,10 +1,11 @@
 import logging
 
 import cv2
-from garbage_detector import config
-from garbage_detector.classifier import IntruderDetector
 from google.cloud import vision
 from google.cloud.vision import types
+
+from intruder_sprinkler import config
+from intruder_sprinkler.detector import IntruderDetector
 
 # @todo I propose to focus on this detector as it has lowest development effort data-science wise
 

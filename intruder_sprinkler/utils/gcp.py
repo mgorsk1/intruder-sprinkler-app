@@ -3,8 +3,9 @@ import os
 import time
 
 import cv2
-from garbage_detector import config
 from google.cloud import storage
+
+from intruder_sprinkler import config
 
 
 class GCPHelper:

@@ -5,7 +5,7 @@ camera:
   framerate: ${CAMERA_FRAMERATE:-10}
   display: ${CAMERA_DISPLAY:-false}
   cls: ${CAMERA_PROVIDER_CLS:-OpenCVCameraProvider}
-  url: ${CAMERA_URL:-localhost:5000}
+  url: ${CAMERA_URL:-0}
 gcp:
   project:
     name: ${GCP_PROJECT_NAME:-experiment-week-intruder}
@@ -20,7 +20,7 @@ gcp:
         width: ${GCP_VISION_IMAGE_SIZE_WIDTH:-2400}
         height: ${GCP_VISION_IMAGE_SIZE_HEIGHT:-1800}
 detector:
-  cls: ${CLASSIFIER_CLS:-GoogleCloudVisionIntruderDetector}
+  cls: ${DETECTOR_CLS:-GoogleCloudVisionIntruderDetector}
 image:
   final_size: ${IMAGE_FINAL_SIZE:-224}
   crop_factor: ${IMAGE_CROP_FACTOR:-.33}

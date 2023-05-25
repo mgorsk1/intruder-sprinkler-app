@@ -44,25 +44,34 @@ if __name__ == '__main__':
 
     start = None
     already_detected: bool = False
+    i = 0
 
     while True:
-        frame = camera.capture()
-        image = cv2.flip(frame.array, 0)
+        i += 1
+        success, image = camera.capture()
 
-        # @todo maybe introduce throttling so image is classified every N seconds (so not images are sent to GCP)
-        detected = detect(detector, image)
+        if not success:
+            continue
 
-        # new detection - attack
-        if not already_detected and detected:
-            sprinkler_manager.on()
-            already_detected = True
-        # enemy gone - shut down water
-        elif already_detected and not detected:
-            sprinkler_manager.off()
-            already_detected = False
-        # ongoing sprinkling
+        # @todo improve on throttling (so the model is not queried that often) - like every 5 sec instead of counter
+        if i % 24 == 0:
+            detected = detect(detector, image)
+            i = 0
+
+            # new detection - attack
+            if not already_detected and detected:
+                sprinkler_manager.on()
+                already_detected = True
+            # enemy gone - shut down water
+            elif already_detected and not detected:
+                sprinkler_manager.off()
+                already_detected = False
+            # ongoing sprinkling
+            else:
+                pass
         else:
             pass
+
         if strtobool(config.camera.display):
             cv2.imshow('Frame', image)
 
