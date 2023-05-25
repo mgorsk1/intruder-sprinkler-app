@@ -4,6 +4,8 @@ camera:
     height: ${CAMERA_RESOLUTION_HEIGHT:-480}
   framerate: ${CAMERA_FRAMERATE:-10}
   display: ${CAMERA_DISPLAY:-false}
+  cls: ${CAMERA_PROVIDER_CLS:-OpenCVCameraProvider}
+  url: ${CAMERA_URL:-localhost:5000}
 gcp:
   project:
     name: ${GCP_PROJECT_NAME:-experiment-week-intruder}

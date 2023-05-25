@@ -1,4 +1,4 @@
-from garbage_detector.detector.google_cloud_vision import GoogleCloudVisionIntruderDetector
+from intruder_sprinkler.detector.google_cloud_vision import GoogleCloudVisionIntruderDetector
 
 
 def get_detector_class(class_name):

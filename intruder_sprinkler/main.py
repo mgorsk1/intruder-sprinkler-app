@@ -6,8 +6,6 @@ from typing import Any
 from typing import Type  # noqa: TYP001
 
 import cv2
-from picamera import PiCamera
-from picamera.array import PiRGBArray
 
 from intruder_sprinkler import config
 from intruder_sprinkler.detector import IntruderDetector
@@ -30,10 +28,8 @@ def setup():
     # allow the camera to warmup
     time.sleep(0.1)
 
-    camera = PiCamera()
-    camera.resolution = (int(config.camera.resolution.width), int(config.camera.resolution.height))
-    camera.framerate = int(config.camera.framerate)
-    raw_capture = PiRGBArray(camera, size=camera.resolution)
+    camera = get_camera_class(config.camera.cls)()
+    camera.setup(config.camera.url, config.camera.resolution.width, config.camera.resolution.height)
 
     detector = get_detector_class(config.detector.cls)()
 
