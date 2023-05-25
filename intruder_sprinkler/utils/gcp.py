@@ -3,9 +3,8 @@ import os
 import time
 
 import cv2
-from google.cloud import storage
-
 from garbage_detector import config
+from google.cloud import storage
 
 
 class GCPHelper:
@@ -31,7 +30,7 @@ class GCPHelper:
         logging.info(f'File {image_location} uploaded to {destination_blob_name}.')
 
         os.remove(image_location)
-        
+
         logging.info(f'Image uploaded to GCP as: {blob.public_url}')
 
         return blob.public_url

@@ -1,13 +1,10 @@
 import logging
 from abc import ABC
 from abc import abstractmethod
-from time import sleep
 
 import requests
-from gpiozero import LED
 
-from garbage_detector import config
-from garbage_detector.utils.gcp import GCPHelper
+from intruder_sprinkler.utils.gcp import GCPHelper
 
 
 class IntruderDetector(ABC):
@@ -24,12 +21,6 @@ class IntruderDetector(ABC):
     def _detect(self, image) -> bool:
         # true if intruder detected, false if not
         pass
-
-    def _upload_image_to_gcp(self, image, detection):
-        photo_url = 
-
-
-        return photo_url
 
     def detect(self, image) -> bool:
         """
@@ -59,4 +50,3 @@ class IntruderDetector(ABC):
             comms = 'intruder gone'
 
         requests.get(f'http://localhost:5005/sayall/{comms}/en')
-

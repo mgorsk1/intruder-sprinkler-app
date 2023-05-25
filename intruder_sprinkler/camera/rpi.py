@@ -6,11 +6,12 @@ class RPICameraProvider(CameraProvider):
         from picamera2 import Picamera2
 
         res = (int(width), int(height))
-        
+
         self.camera = Picamera2()
-        video_config = self.camera.create_video_configuration(main={"size": res, "format": "RGB888"})
+        video_config = self.camera.create_video_configuration(main={'size': res, 'format': 'RGB888'})
         self.camera.configure(video_config)
         self.camera.start()
 
     def capture(self):
-        return _, self.camera.capture_array()
+        _, result = self.camera.capture_array()
+        return result
