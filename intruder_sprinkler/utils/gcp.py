@@ -13,17 +13,17 @@ class GCPHelper:
         storage_client = storage.Client()
         self.bucket = storage_client.bucket(config.gcp.bucket.name)
 
-    def upload_image(self, image, detection):
+    def upload_image(self, image, category):
         """
         Uploads a file to the bucket.
         """
 
-        image_name = f'{detection}_{int(time.time())}.jpg'
+        image_name = f'{int(time.time())}.jpg'
         image_location = f'/tmp/{image_name}'
 
         cv2.imwrite(image_location, image)
 
-        destination_blob_name = f'detection={detection}/{image_name}'
+        destination_blob_name = f'detection={category}/{image_name}'.lower()
         blob = self.bucket.blob(destination_blob_name)
 
         blob.upload_from_filename(image_location)

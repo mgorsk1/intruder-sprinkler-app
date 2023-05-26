@@ -6,4 +6,4 @@ class DummyIntruderDetector(IntruderDetector):
         pass
 
     def _detect(self, image):
-        return False
+        return False, None

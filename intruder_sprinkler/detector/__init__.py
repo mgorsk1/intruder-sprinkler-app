@@ -1,6 +1,8 @@
 import logging
 from abc import ABC
 from abc import abstractmethod
+from typing import Optional
+from typing import Tuple
 
 import requests
 
@@ -18,7 +20,7 @@ class IntruderDetector(ABC):
         pass
 
     @abstractmethod
-    def _detect(self, image) -> bool:
+    def _detect(self, image) -> Tuple[bool, Optional[str]]:
         # true if intruder detected, false if not
         pass
 
@@ -35,10 +37,10 @@ class IntruderDetector(ABC):
 
         image = self._prepare_image_for_model(image)
 
-        detection = self._detect(image)
+        detection, category = self._detect(image)
 
         if detection:
-            self.gcp.upload_image(image, detection)
+            self.gcp.upload_image(image, category)
 
         return detection
 

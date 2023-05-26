@@ -9,6 +9,12 @@ from intruder_sprinkler.detector import IntruderDetector
 
 # @todo I propose to focus on this detector as it has lowest development effort data-science wise
 
+# 1. Create project and set GCP_PROJECT_NAME variable accordingly
+# 2. Create service account within the project, download json key and set GOOGLE_APPLICATION_CREDENTIALS variable to
+# absolute path to this file
+# 2.1. Account should have Vision API and Google Cloud Storage Admin roles assigned
+# 3. Create storage bucket within the project and set GCP_BUCKET_NAME variable accordingly
+
 
 class GoogleCloudVisionIntruderDetector(IntruderDetector):
     def __init__(self, *args, **kwargs):
@@ -38,6 +44,9 @@ class GoogleCloudVisionIntruderDetector(IntruderDetector):
 
         if result is not None:
             if result >= int(config.gcp.vision.classification.threshold):
-                return True
+                logging.info(f'Found intruder <{config.intruder.name}> with probabilty of <{result}>')
+                return True, config.intruder.name
 
-        return False
+        logging.info(f'Intruder <{config.intruder.name}> not found')
+
+        return False, None
