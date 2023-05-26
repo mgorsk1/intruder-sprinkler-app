@@ -44,7 +44,7 @@ class GoogleCloudVisionIntruderDetector(IntruderDetector):
 
         if result is not None:
             if result >= int(config.gcp.vision.classification.threshold):
-                logging.info(f'Found intruder <{config.intruder.name}> with probabilty of <{result}>')
+                logging.info(f'Intruder <{config.intruder.name}> found with probabilty of <{result}%>')
                 return True, config.intruder.name
 
         logging.info(f'Intruder <{config.intruder.name}> not found')
