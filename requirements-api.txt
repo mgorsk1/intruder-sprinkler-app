@@ -1,0 +1,3 @@
+fastapi
+gpiozero
+uvicorn[standard]

@@ -3,22 +3,21 @@ from typing import Any
 from typing import Type  # noqa: TYP001
 
 import cv2
+import requests
 from distutils.util import strtobool
 
 from intruder_sprinkler import config
 from intruder_sprinkler.camera.imports import get_camera_class
 from intruder_sprinkler.detector import IntruderDetector
 from intruder_sprinkler.detector.imports import get_detector_class
-from intruder_sprinkler.sprinkler.manager import SprinklerManager
 
-sprinkler_manager: Any
+
 camera: Any
 raw_capture: Any
 detector: Type[IntruderDetector]
 
 
 def setup():
-    global sprinkler_manager
     global camera
     global detector
     global classifier
@@ -30,9 +29,6 @@ def setup():
     camera.setup(config.camera.url, config.camera.resolution.width, config.camera.resolution.height)
 
     detector = get_detector_class(config.detector.cls)()
-
-    # used to turn sprinklers on/off
-    sprinkler_manager = SprinklerManager(config.valve.gpio)
 
 
 def detect(detector: Type[IntruderDetector], image):
@@ -60,11 +56,11 @@ if __name__ == '__main__':
 
             # new detection - attack
             if not already_detected and detected:
-                sprinkler_manager.on()
+                requests.post(f'{config.api.url}/on')
                 already_detected = True
             # enemy gone - shut down water
             elif already_detected and not detected:
-                sprinkler_manager.off()
+                requests.post(f'{config.api.url}/off')
                 already_detected = False
             # ongoing sprinkling
             else:

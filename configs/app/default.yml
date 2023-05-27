@@ -8,10 +8,10 @@ camera:
   url: ${CAMERA_URL:-0}
 gcp:
   project:
-    name: ${GCP_PROJECT_NAME:-intruder-sprinkler-experiment}
+    name: ${GCP_PROJECT_NAME:-intruder-devices-experiment}
     region: ${GCP_REGION:-us-central1}
   bucket:
-    name: ${GCP_BUCKET_NAME:-intruder-sprinkler-experiment-detections}
+    name: ${GCP_BUCKET_NAME:-intruder-devices-experiment-detections}
   vision:
     classification:
       threshold: ${GCP_VISION_CLASSIFICATION_THRESHOLD:-40}
@@ -25,6 +25,10 @@ image:
   final_size: ${IMAGE_FINAL_SIZE:-224}
   crop_factor: ${IMAGE_CROP_FACTOR:-.33}
 valve:
-  gpio: ${GPIO_SPRINLER_PIN:-5}
+  gpio: ${SPRINKLER_GPIO:-23}
+led:
+  gpio: ${LED_GPIO:-23}
 intruder:
   name: ${INTRUDER_NAME:-cat}
+api:
+  url: ${API_URL:-localhost:5000}
