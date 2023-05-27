@@ -1,3 +1,5 @@
+import time
+
 from fastapi import FastAPI
 
 from intruder_sprinkler import config
@@ -8,6 +10,15 @@ sprinkler = SprinklerManager(config.valve.gpio)
 led = SprinklerManager(config.led.gpio)
 
 devices = [sprinkler, led]
+
+
+@app.on_event('startup')
+async def startup_event():
+    for _ in range(3):
+        led.on()
+        time.sleep(1)
+        led.off()
+        time.sleep(1)
 
 
 @app.post('/on')
