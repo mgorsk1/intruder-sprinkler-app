@@ -4,19 +4,24 @@ from intruder_sprinkler import config
 from intruder_sprinkler.devices.sprinkler import SprinklerManager
 
 app = FastAPI()
-device = SprinklerManager(config.valve.gpio)
+sprinkler = SprinklerManager(config.valve.gpio)
+led = SprinklerManager(config.led.gpio)
+
+devices = [sprinkler, led]
 
 
 @app.post('/on')
 async def on():
-    return device.on()
+    for d in devices:
+        d.on()
 
 
 @app.post('/off')
 async def off():
-    return device.off()
+    for d in devices:
+        d.off()
 
 
 @app.get('/status')
 async def status():
-    return device.status()
+    return sprinkler.status()
