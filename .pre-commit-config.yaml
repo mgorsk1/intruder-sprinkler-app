@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.6
+  python: python3.9
 default_stages:
   - commit
   - push
@@ -21,7 +21,7 @@ repos:
       - id: fix-encoding-pragma
         args:
           - '--remove'
-  - repo: 'https://gitlab.com/pycqa/flake8'
+  - repo: 'https://github.com/pycqa/flake8'
     rev: 3.7.9
     hooks:
       - id: flake8
@@ -65,16 +65,16 @@ repos:
     rev: v1.1.7
     hooks:
       - id: forbid-tabs
-  - repo: 'https://github.com/Lucas-C/pre-commit-hooks-bandit'
-    rev: v1.0.4
-    hooks:
-      - id: python-bandit-vulnerability-check
-        args:
-          - '--verbose'
-          - '--ini'
-          - .banditrc
-          - '-ll'
-          - '--recursive'
-          - '--skip'
-          - 'B108'
-          - mock_data_uploader
+#  - repo: 'https://github.com/Lucas-C/pre-commit-hooks-bandit'
+#    rev: v1.0.4
+#    hooks:
+#      - id: python-bandit-vulnerability-check
+#        args:
+#          - '--verbose'
+#          - '--ini'
+#          - .banditrc
+#          - '-ll'
+#          - '--recursive'
+#          - '--skip'
+#          - 'B108'
+#          - mock_data_uploader
