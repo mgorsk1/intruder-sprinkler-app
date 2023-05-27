@@ -15,6 +15,7 @@ async def startup_event():
         device.on()
         time.sleep(1)
         device.off()
+        time.sleep(1)
 
 
 @app.post('/on')
