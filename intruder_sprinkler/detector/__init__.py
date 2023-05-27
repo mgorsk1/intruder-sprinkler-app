@@ -40,7 +40,10 @@ class IntruderDetector(ABC):
         detection, category = self._detect(image)
 
         if detection:
+            logging.info('Intruder detected')
             self.gcp.upload_image(image, category)
+        else:
+            logging.info('Nothing detected')
 
         return detection
 

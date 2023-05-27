@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 from typing import Any
 from typing import Type  # noqa: TYP001
 
@@ -10,7 +11,6 @@ from intruder_sprinkler import config
 from intruder_sprinkler.camera.imports import get_camera_class
 from intruder_sprinkler.detector import IntruderDetector
 from intruder_sprinkler.detector.imports import get_detector_class
-
 
 camera: Any
 raw_capture: Any
@@ -42,6 +42,8 @@ if __name__ == '__main__':
     already_detected: bool = False
     i = 0
 
+    last_detection = datetime.now()
+
     while True:
         i += 1
         success, image = camera.capture()
@@ -49,8 +51,10 @@ if __name__ == '__main__':
         if not success:
             continue
 
-        # @todo improve on throttling (so the model is not queried that often) - like every 5 sec instead of counter
-        if i % 24 == 0:
+        # throttling to detect every n seconds no to overflow model
+        now = datetime.now()
+        delta = now - last_detection
+        if delta.total_seconds() > float(config.detector.seconds):
             detected = detect(detector, image)
             i = 0
 
@@ -65,6 +69,8 @@ if __name__ == '__main__':
             # ongoing sprinkling
             else:
                 pass
+
+            last_detection = now
         else:
             pass
 
