@@ -14,7 +14,7 @@ async def on():
 
 @app.post('/off')
 async def off():
-    return device.on()
+    return device.off()
 
 
 @app.get('/status')
