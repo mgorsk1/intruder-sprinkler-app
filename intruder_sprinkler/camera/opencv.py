@@ -2,6 +2,8 @@ import cv2
 
 from intruder_sprinkler.camera.base import CameraProvider
 
+# this provider works with both remote webcams, usb webcams and rpi camera
+
 
 class OpenCVCameraProvider(CameraProvider):
     def setup(self, url, *args):
