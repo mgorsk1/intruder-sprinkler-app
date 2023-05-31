@@ -37,7 +37,7 @@ async def on(switch: SwitchModel):
             d.on()
     else:
         for d in devices:
-            d.on()
+            d.off()
 
 
 @app.get('/valve')
