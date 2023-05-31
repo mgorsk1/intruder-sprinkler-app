@@ -1,6 +1,7 @@
 import time
 
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 from intruder_sprinkler import config
 from intruder_sprinkler.devices.sprinkler import SprinklerManager
@@ -12,6 +13,14 @@ led = SprinklerManager(config.led.gpio)
 devices = [sprinkler, led]
 
 
+class SwitchModel(BaseModel):
+    active: bool
+
+
+class StateModel(BaseModel):
+    is_active: bool
+
+
 @app.on_event('startup')
 async def startup_event():
     for _ in range(3):
@@ -21,18 +30,16 @@ async def startup_event():
         time.sleep(1)
 
 
-@app.post('/on')
-async def on():
-    for d in devices:
-        d.on()
+@app.post('/valve')
+async def on(switch: SwitchModel):
+    if switch.active:
+        for d in devices:
+            d.on()
+    else:
+        for d in devices:
+            d.on()
 
 
-@app.post('/off')
-async def off():
-    for d in devices:
-        d.off()
-
-
-@app.get('/status')
+@app.get('/valve')
 async def status():
-    return sprinkler.status()
+    return StateModel(is_active=sprinkler.status())
